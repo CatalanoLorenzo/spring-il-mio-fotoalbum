@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<html xmlns:th="http://www.thymeleaf.org">
+
+</head>
+
+<body>
+	<h1>Categories</h1>
+	<h2>Create a new Category</h2>
+	<a th:href="@{/photos}">Back</a>
+	<form method="post" action="/categories/create">
+		<input type="text" id="title" name="title">
+		<input type="submit">
+	</form>
+	<h2>Show all Categories</h2>
+	<ul>
+		<li th:each="category : ${Categories}" th:object="${category}">
+			<form method="post" th:action="@{/categories/edit/{id}(id=${category.id})}">
+				<input type="text" id="title" name="title" th:value="*{getTitle()}" />
+				<input type="submit" value="EDIT" />
+			</form>
+			<form method="post" th:action="@{/categories/delete/{id}(id=${category.id})}" >
+				<input type="submit" value="DELETE">
+			</form>
+		</li>
+	</ul>
+
+
+
+</body>
+
+</html>

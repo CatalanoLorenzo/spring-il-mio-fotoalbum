@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<h1>Foto dell'utente :<strong>[[${user.getUsername()}]]</strong></h1>
+	<a th:href="@{/photos}">Back</a>
+
+	<ul>
+		<li th:object="${photo}">
+			<div>
+				<p>
+					[[*{getTitle()}]]
+				</p>
+				<img th:alt="*{getTitle()}" th:src="*{getUrl()}">
+				<p>[[*{getDescription()}]]</p>
+				<ul>
+					<li th:each="category : ${categories}" th:object="${category}">
+						<p > [[*{getTitle()}]]</p>
+						
+					</li>
+				</ul>
+			</div>
+			<div>
+				<a th:href="@{/photos/edit/{id}(id=*{getId()})}">
+					Edit
+				</a>
+				<form method="post" th:action="@{/photos/delete/{id}(id=*{id})}">
+					<input type="submit" value="Delete">
+				</form>
+			</div>
+		</li>
+	</ul>
+</body>
+
+</html>

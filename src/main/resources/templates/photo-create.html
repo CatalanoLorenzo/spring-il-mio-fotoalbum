@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<h1>Foto per l'utente :<strong>[[${user.getUsername()}]]</strong></h1>
+		<a th:href="@{/photos/{id}(id=${photo.getId()})}">Back</a>
+
+	<form th:object="${photo}" method="post">
+
+		<input type="text"  placeholder="write a title..." th:field="*{title}">
+
+		<div th:if="${#fields.hasErrors('title')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+			</ul>
+			<br />
+		</div>
+
+		<textarea  placeholder="write a description..." th:field="*{description}"></textarea>
+
+		<div th:if="${#fields.hasErrors('description')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+			</ul>
+			<br />
+		</div>
+		<img th:if="*{url} != null" th:src="*{url}" th:alt="*{title}">
+		<input type="text" th:field="*{url}"  placeholder="write a url...">
+
+		<div th:if="${#fields.hasErrors('url')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+			</ul>
+			<br />
+		</div>
+
+		<label for="visible"> Is  Visible ?</label>
+		<input type="checkbox" th:field="*{visible}" value="*{isVisible}">
+
+		<div th:if="${#fields.hasErrors('visible')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('visible')}" th:text="${err}"></li>
+			</ul>
+			<br />
+		</div>
+
+		<ul>
+			<li th:each="category : ${categories}" th:object="${category}">
+				<label th:for="${'categories-' + category.id}"> [[*{getTitle()}]]</label>
+				<input type="checkbox" th:id="${'categories-' + category.id}" th:value="*{id}"
+					th:field="${photo.categories}">
+			</li>
+		</ul>
+
+		<input type="submit">
+	</form>
+
+</body>
+
+</html>

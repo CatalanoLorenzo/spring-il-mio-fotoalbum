@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<h1>Foto dell'utente :<strong>[[${user.getUsername()}]]</strong></h1>
+	<h2>Lista Foto Caricate</h2>
+	<a th:href="@{/photos/create}">Add new Photo</a>
+	<a th:href="@{/categories}" th:if="${isAdmin}">Section Category</a>
+	<ul>
+		<li th:each="photo, i : ${photos}" th:object="${photo}" th:if="${photo.isVisible()}">
+			<div>
+			<p>
+				n° <strong>[[${i.index}+1]]</strong> [[${photo.getTitle()}]]
+			</p>
+			<img 
+			th:alt="*{getTitle()}"
+			th:src="*{getUrl()}">
+			<p>[[${photo.getDescription()}]]</p>	
+			</div>
+			<div>
+				<a th:href="@{/photos/{id}(id=*{getId()})}">Show</a>
+				
+			</div>
+		</li>
+	</ul>
+</body>
+
+</html>
